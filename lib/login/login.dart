@@ -85,10 +85,10 @@ class _LoginState extends State<Login> {
                 Form(
                   child: Row(
                     children: [
-                      const SizedBox(width: 16),
+                      //const SizedBox(width: 16),
                       Container(
                         height: 400,
-                        width: 400,
+                        width: 432,
                         decoration: BoxDecoration(
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(40)

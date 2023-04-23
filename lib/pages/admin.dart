@@ -129,7 +129,10 @@ class _AdminState extends State<Admin> {
       ),
       appBar: AppBar(
         //automaticallyImplyLeading: false,
-        title: const Text('Admin'),
+        iconTheme: const IconThemeData(color: Colors.black),
+        elevation: 0,
+        title: Text('Administrator', style: GoogleFonts.poppins(color: Colors.black)),
+        backgroundColor: Colors.white54,
       ),
       body: Center(
         child: FutureBuilder<Dashboard>(
@@ -158,7 +161,11 @@ class _AdminState extends State<Admin> {
                       children: [
                         Column(
                           children: [
-                            const SizedBox(height: 60),
+                            const SizedBox(height: 20),
+                            Text("DASHBOARD", style: GoogleFonts.poppins(
+                              fontSize: 30
+                            )),
+                            const SizedBox(height: 50),
                             Row(
                               children: [
                                 const SizedBox(width: 30),
