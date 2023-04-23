@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:line_icons/line_icons.dart';
+import 'package:mobile_inventory_system/API%20Response/api_response.dart';
 import 'package:mobile_inventory_system/constants/constants.dart';
+import 'package:mobile_inventory_system/login/login.dart';
 
 import '../admin/admin_instance.dart';
+import '../users/user_instance.dart';
 class Admin extends StatefulWidget {
   const Admin({ Key? key }) : super(key: key);
 
@@ -25,17 +28,107 @@ class _AdminState extends State<Admin> {
     }
   }
 
+  Future<Map<String,dynamic>> fetchUserOnly()async{
+    String token = await getToken();
+    final response = await http.get(
+      Uri.parse(userUrl),
+      headers: {
+        'Authorization' : 'Bearer $token'
+      }
+    );
+
+    if(response.statusCode == 200){
+      final Map<String, dynamic> data = json.decode(response.body);
+      return data['user'];
+    }else{
+      throw Exception('Error');
+    }
+  }
+
+  void logout()async{
+    String token = await getToken();
+    final response = await http.post(Uri.parse(logoutUrl), 
+    headers: {
+      'Authorization' : 'Bearer $token'
+    });
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>const Login()));
+    print(response.statusCode);
+  }
+
   //late Future<Dashboard> futureDashboard;
   @override
   void initState() {
     super.initState();
     fetchDashboard();
+    fetchUserOnly();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: SafeArea(
+          child: FutureBuilder<Map<String, dynamic>>(
+            future: fetchUserOnly(),
+            builder: (BuildContext context, snapshot){
+              if(snapshot.connectionState == ConnectionState.done){
+                if(snapshot.hasError){
+                  return const Text('Error');
+                }else if(snapshot.hasData){
+                  final data = snapshot.data!;
+                  //return Text('${data['name']}');
+                  return Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Container(
+                        width: 200,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(width: 1, color: Colors.black),
+                          image: const DecorationImage(
+                            image: AssetImage('assets/User.jpg'),
+                            fit: BoxFit.cover
+                          )
+                        )
+                      ),
+                      const SizedBox(height: 30),
+                      Text('Name: ${data['name']}', style: GoogleFonts.poppins(fontSize: 20)),
+                      const SizedBox(height: 5),
+                      Text('Email: ${data['email']}', style: GoogleFonts.poppins(fontSize: 18)),
+                      const SizedBox(height: 30),
+                      GestureDetector(
+                        onTap: logout,
+                        child: Container(
+                          height: 50,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Row(
+                            children: const [
+                              SizedBox(width: 15),
+                              Icon(LineIcons.alternateSignOut),
+                              SizedBox(width: 5),
+                              Text('Log Out')
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                }
+              }else if(snapshot.hasError){
+                return Text('${snapshot.error}');
+              }else{
+                return const CircularProgressIndicator();
+              }
+              return const CircularProgressIndicator();
+            }),
+        ),
+      ),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        //automaticallyImplyLeading: false,
         title: const Text('Admin'),
       ),
       body: Center(
@@ -47,12 +140,12 @@ class _AdminState extends State<Admin> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircularProgressIndicator(),
+                      const CircularProgressIndicator(),
                       Visibility(
                         visible: snapshot.hasData,
-                        child: Text(
-                          snapshot.data!.orders_value,
-                          style: const TextStyle(color: Colors.black, fontSize: 24),
+                        child: const Text(
+                          'Loading',
+                          style: TextStyle(color: Colors.black, fontSize: 24),
                         ),
                       )
                     ],
