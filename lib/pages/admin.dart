@@ -7,7 +7,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:mobile_inventory_system/API%20Response/api_response.dart';
 import 'package:mobile_inventory_system/constants/constants.dart';
 import 'package:mobile_inventory_system/login/login.dart';
-
+import 'package:mobile_inventory_system/pages/super_admin.dart';
 import '../admin/admin_instance.dart';
 import '../users/user_instance.dart';
 class Admin extends StatefulWidget {
@@ -51,8 +51,17 @@ class _AdminState extends State<Admin> {
     headers: {
       'Authorization' : 'Bearer $token'
     });
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>const Login()));
+    if(response.statusCode == 200){
+       await removeRole();
+       await logOutRemoveToken();
+    }
     print(response.statusCode);
+  }
+
+  void removeTokenRole()async{
+    removeRole();
+    await logOutRemoveToken();
+    
   }
 
   //late Future<Dashboard> futureDashboard;
@@ -97,7 +106,10 @@ class _AdminState extends State<Admin> {
                       Text('Email: ${data['email']}', style: GoogleFonts.poppins(fontSize: 18)),
                       const SizedBox(height: 30),
                       GestureDetector(
-                        onTap: logout,
+                        onTap: ()async{
+                          removeTokenRole();
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> const Login()));
+                        },
                         child: Container(
                           height: 50,
                           width: 200,
@@ -114,7 +126,8 @@ class _AdminState extends State<Admin> {
                             ],
                           ),
                         ),
-                      )
+                      ),
+                      
                     ],
                   );
                 }
@@ -169,50 +182,55 @@ class _AdminState extends State<Admin> {
                             Row(
                               children: [
                                 const SizedBox(width: 30),
-                                Container(
-                                  height: 200,
-                                  width: 170,        
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange[400],
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black
-                                    )
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(height: 5),
-                                      Row(
-                                        children: const [
-                                          SizedBox(width: 70),
-                                          Icon(LineIcons.wineGlass, size: 90)
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            '${snapshot.data!.products_quantity} pcs',
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 25
-                                            ),
-                                          ),
-                                          
-                                        ],
-                                      ),
-                                      const SizedBox(height: 40),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 5),
-                                          Text('Liquor Quantity', 
-                                            style: GoogleFonts.fredoka(
-                                              fontSize: 21,
-                                              
-                                          ))
-                                        ],
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const SuperAdmin()));
+                                  },
+                                  child: Container(
+                                    height: 200,
+                                    width: 170,        
+                                    decoration: BoxDecoration(
+                                      color: Colors.orange[400],
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Colors.black
                                       )
-                                    ],
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(height: 5),
+                                        Row(
+                                          children: const [
+                                            SizedBox(width: 70),
+                                            Icon(LineIcons.wineGlass, size: 90)
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            const SizedBox(width: 10),
+                                            Text(
+                                              '${snapshot.data!.products_quantity} pcs',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 25
+                                              ),
+                                            ),
+                                            
+                                          ],
+                                        ),
+                                        const SizedBox(height: 40),
+                                        Row(
+                                          children: [
+                                            const SizedBox(width: 5),
+                                            Text('Liquor Quantity', 
+                                              style: GoogleFonts.fredoka(
+                                                fontSize: 21,
+                                                
+                                            ))
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 35),

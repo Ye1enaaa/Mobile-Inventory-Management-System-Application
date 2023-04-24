@@ -30,7 +30,7 @@ class User{
     id: json['user']['id'],
     name: json['user']['name'],
     email: json['user']['email'],
-    disabled: json['user']['disable'],
+    disabled: json['user']['disabled'],
     role: json['user']['role'],
     token: json['token']
   );
@@ -47,10 +47,26 @@ Future<int> getRole() async{
   return pref.getInt('role') ?? 0;
 }
 
+Future<int> getStatus() async{
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  return pref.getInt('disabled') ?? 0;
+}
+
+Future<bool> logOutRemoveToken() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  return pref.remove('token');
+}
+
+Future<bool> removeRole() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  return pref.remove('role');
+}
+
 Future<ApiResponse> getUserDetail()async{
   ApiResponse apiResponse = ApiResponse();
     String token = await getToken();
     int role = await getRole();
+    int status = await getStatus();
     final response = await http.get(
       Uri.parse(userUrl),
       headers: {
@@ -63,5 +79,6 @@ Future<ApiResponse> getUserDetail()async{
   print(apiResponse.data);
   print(token);
   print(role);
+  print('Disabled: $status');
   return apiResponse;
 }

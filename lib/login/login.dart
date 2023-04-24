@@ -51,21 +51,27 @@ class _LoginState extends State<Login> {
     if(response.error == null){
       saveToken(response.data as User);
       getUserDetail();
+      int status = await getStatus();
       int role = await getRole();
-      if(role == 3){
-        // ignore: use_build_context_synchronously
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> const Customer()));
-      } else if(role == 2){
+      if(status == 0){
+        if(role == 3){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> const Customer()));
+        } else if(role == 2){
         // ignore: use_build_context_synchronously
         Navigator.push(context, MaterialPageRoute(builder: (context)=> const Admin()));
+      } // ignore: use_build_context_synchronously
+      } else if(status == 1){
+        print('Account Disabled');
       }
     } 
+    
   }
 
   void saveToken(User user) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString('token', user.token ?? '');
     await pref.setInt('role', user.role ?? 0);
+    await pref.setInt('disabled', user.disabled ?? 0);
     // ignore: use_build_context_synchronously
     //Navigator.push(context, MaterialPageRoute(builder: (context)=>const RootPage()));
   }
