@@ -27,6 +27,13 @@ class _PurchaseOrderViewState extends State<PurchaseOrderView> {
     }
   }
 
+  Future reload() async {
+    final response = await http.get(Uri.parse(purchaseOrderUrl));
+    final decode = jsonDecode(response.body) as Map;
+    final decoded = decode['purchaseOrder'] as List;
+    print(decoded);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -48,14 +55,18 @@ class _PurchaseOrderViewState extends State<PurchaseOrderView> {
                   if(snapshot.connectionState == ConnectionState.waiting){
                     return const CircularProgressIndicator();
                   }else if(snapshot.connectionState == ConnectionState.done){
-                    return ListView.builder(
-                      itemCount: purchaseOrders.length,
-                      itemBuilder: (context, index){
-                        return ListTile(
-                          title: Text(purchaseOrders[index].name),
-                          subtitle: Text(purchaseOrders[index].userId.toString()),
-                        );
-                      }
+                    return RefreshIndicator(
+                      onRefresh: fetchData,
+                      child: ListView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemCount: purchaseOrders.length,
+                        itemBuilder: (context, index){
+                          return ListTile(
+                            title: Text(purchaseOrders[index].name),
+                            subtitle: Text(purchaseOrders[index].userId.toString()),
+                          );
+                        }
+                      ),
                     );
                   }
               }else if(snapshot.hasError){

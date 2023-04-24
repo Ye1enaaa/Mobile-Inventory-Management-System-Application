@@ -79,6 +79,63 @@ class PurchaseOrder{
   }
 }
 
+class Products{
+  final int _id;
+  final String _name;
+  final String _desc;
+  final String _productCode;
+  final String _unitPrice;
+  final String _quantity;
+  final String _inventoryValue;
+
+  int get id => _id;
+  String get name => _name;
+  String get desc => _desc;
+  String get productCode => _productCode;
+  String get unitPrice => _unitPrice;
+  String get quantity => _quantity;
+  String get inventoryValue => _inventoryValue;
+
+  Products({
+    required int id,
+    required String name,
+    required String desc,
+    required String productCode,
+    required String unitPrice,
+    required String quantity,
+    required String inventoryValue
+  }):
+    _id = id,
+    _name = name,
+    _desc = desc,
+    _productCode = productCode,
+    _unitPrice = unitPrice,
+    _quantity =quantity,
+    _inventoryValue = inventoryValue;
+
+  factory Products.fromMap(Map<String,dynamic> map){
+    return Products(
+      id: map['id'], 
+      name: map['name'], 
+      desc: map['description'], 
+      productCode: map['product_code'], 
+      unitPrice: map['unit_price'], 
+      quantity: map['quantity'], 
+      inventoryValue: map['inventory_value']);
+  }
+  Map<String,dynamic> toMap(){
+    return {
+      'id':  _id,
+      'name': _name,
+      'description': _desc,
+      'product_code': _productCode,
+      'unit_price': _unitPrice,
+      'quantity': _quantity,
+      'inventory_value': _inventoryValue
+    };
+  }
+}
+
 
 
 

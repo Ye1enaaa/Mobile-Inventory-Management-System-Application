@@ -6,10 +6,12 @@ import 'package:http/http.dart' as http;
 import 'package:line_icons/line_icons.dart';
 import 'package:mobile_inventory_system/API%20Response/api_response.dart';
 import 'package:mobile_inventory_system/admin/purchase_order_view.dart';
+import 'package:mobile_inventory_system/admin/stocks_data.dart';
 import 'package:mobile_inventory_system/constants/constants.dart';
 import 'package:mobile_inventory_system/login/login.dart';
 import 'package:mobile_inventory_system/pages/super_admin.dart';
 import '../admin/admin_instance.dart';
+import '../custom_widget/admin_custom.dart';
 import '../users/user_instance.dart';
 class Admin extends StatefulWidget {
   const Admin({ Key? key }) : super(key: key);
@@ -189,103 +191,21 @@ class _AdminState extends State<Admin> {
                                 const SizedBox(width: 30),
                                 GestureDetector(
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const PurchaseOrderView()));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const StocksData()));
                                   },
-                                  child: Container(
-                                    height: 200,
-                                    width: 170,        
-                                    decoration: BoxDecoration(
-                                      color: Colors.orange[400],
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        width: 1,
-                                        color: Colors.black
-                                      )
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        const SizedBox(height: 5),
-                                        Row(
-                                          children: const [
-                                            SizedBox(width: 70),
-                                            Icon(LineIcons.wineGlass, size: 90)
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            const SizedBox(width: 10),
-                                            Text(
-                                              '${snapshot.data!.products_quantity} pcs',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 25
-                                              ),
-                                            ),
-                                            
-                                          ],
-                                        ),
-                                        const SizedBox(height: 40),
-                                        Row(
-                                          children: [
-                                            const SizedBox(width: 5),
-                                            Text('Liquor Quantity', 
-                                              style: GoogleFonts.fredoka(
-                                                fontSize: 21,
-                                                
-                                            ))
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                  child: DashboardCards(
+                                    color: Colors.orange[400], 
+                                    icon: LineIcons.wineGlass, 
+                                    textData: '${snapshot.data!.products_quantity} pcs',
+                                    cardTitle: 'Liquor Quantity',
+                                  )
                                 ),
                                 const SizedBox(width: 35),
-                                Container(
-                                  height: 200,
-                                  width: 170,        
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue[200],
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black
-                                    )
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(height: 5),
-                                      Row(
-                                        children: const [
-                                          SizedBox(width: 70),
-                                          Icon(LineIcons.fileInvoiceWithUsDollar, size: 90)
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            '${snapshot.data!.inventory_value} PHP',
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 25
-                                            ),
-                                          ),
-                                          
-                                        ],
-                                      ),
-                                      const SizedBox(height: 40),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 5),
-                                          Text('Inventory Value', 
-                                            style: GoogleFonts.fredoka(
-                                              fontSize: 21,
-                                              
-                                          ))
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                
+                                DashboardCards(
+                                  icon: LineIcons.fileInvoiceWithUsDollar, 
+                                  textData: '${snapshot.data!.inventory_value} PHP', 
+                                  color: Colors.blue[200], 
+                                  cardTitle: 'Inventory Value')
                               ],
                             ),
                           ],
@@ -296,97 +216,22 @@ class _AdminState extends State<Admin> {
                             Row(
                               children: [
                                 const SizedBox(width: 30),
-                                Container(
-                                  height: 200,
-                                  width: 170,        
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange[200],
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black
-                                    )
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(height: 5),
-                                      Row(
-                                        children: const [
-                                          SizedBox(width: 70),
-                                          Icon(LineIcons.userFriends, size: 90)
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            '${snapshot.data!.admin_count}',
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 25
-                                            ),
-                                          ),
-                                          
-                                        ],
-                                      ),
-                                      const SizedBox(height: 40),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 5),
-                                          Text('Customer', 
-                                            style: GoogleFonts.fredoka(
-                                              fontSize: 21,        
-                                          ))
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                DashboardCards(
+                                  icon: LineIcons.userFriends, 
+                                  textData: '${snapshot.data!.admin_count}', 
+                                  color: Colors.orange[200], 
+                                  cardTitle: 'Customer'
                                 ),
                                 const SizedBox(width: 35),
-                                Container(
-                                  height: 200,
-                                  width: 170,        
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue[200],
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black
-                                    )
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(height: 5),
-                                      Row(
-                                        children: const [
-                                          SizedBox(width: 70),
-                                          Icon(LineIcons.barChartAlt, size: 90)
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            '${snapshot.data!.orders_value} PHP',
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 25
-                                            ),
-                                          ),
-                                          
-                                        ],
-                                      ),
-                                      const SizedBox(height: 40),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 5),
-                                          Text('Sales', 
-                                            style: GoogleFonts.fredoka(
-                                              fontSize: 21,
-                                              
-                                          ))
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const PurchaseOrderView()));
+                                  },
+                                  child: DashboardCards(
+                                    icon: LineIcons.barChartAlt, 
+                                    textData: '${snapshot.data!.orders_value} PHP', 
+                                    color: Colors.blue[200], 
+                                    cardTitle: 'Sales')
                                 ),
                               ],
                             )
@@ -398,51 +243,11 @@ class _AdminState extends State<Admin> {
                             Row(
                               children: [
                                 const SizedBox(width: 30),
-                                Container(
-                                  height: 200,
-                                  width: 170,        
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange[200],
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black
-                                    )
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(height: 5),
-                                      Row(
-                                        children: const [
-                                          SizedBox(width: 70),
-                                          Icon(LineIcons.shoppingBag, size: 90)
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            '${snapshot.data!.product_count} pcs',
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 25
-                                            ),
-                                          ),
-                                          
-                                        ],
-                                      ),
-                                      const SizedBox(height: 40),
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 5),
-                                          Text('Products', 
-                                            style: GoogleFonts.fredoka(
-                                              fontSize: 21,        
-                                          ))
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                DashboardCards(
+                                  icon: LineIcons.shoppingBag, 
+                                  textData: '${snapshot.data!.product_count} pcs', 
+                                  color: Colors.orange[200], 
+                                  cardTitle: 'Products')
                                 //const SizedBox(width: 35)
                               ],
                             )
