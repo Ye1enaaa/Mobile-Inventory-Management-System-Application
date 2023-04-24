@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:line_icons/line_icons.dart';
 import 'package:mobile_inventory_system/API%20Response/api_response.dart';
+import 'package:mobile_inventory_system/admin/purchase_order_view.dart';
 import 'package:mobile_inventory_system/constants/constants.dart';
 import 'package:mobile_inventory_system/login/login.dart';
 import 'package:mobile_inventory_system/pages/super_admin.dart';
@@ -18,6 +19,10 @@ class Admin extends StatefulWidget {
 }
 
 class _AdminState extends State<Admin> {
+  Future<Dashboard> refreshData(BuildContext context)async{
+    return fetchDashboard();
+  }
+  
   Future<Dashboard> fetchDashboard()async{
     final response = await http.get(Uri.parse(dashboardUrl));
 
@@ -184,7 +189,7 @@ class _AdminState extends State<Admin> {
                                 const SizedBox(width: 30),
                                 GestureDetector(
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const SuperAdmin()));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const PurchaseOrderView()));
                                   },
                                   child: Container(
                                     height: 200,
