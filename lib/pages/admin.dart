@@ -10,6 +10,7 @@ import 'package:mobile_inventory_system/admin/stocks_data.dart';
 import 'package:mobile_inventory_system/constants/constants.dart';
 import 'package:mobile_inventory_system/login/login.dart';
 import 'package:mobile_inventory_system/pages/super_admin.dart';
+import 'package:mobile_inventory_system/scanner/qr_scanner.dart';
 import '../admin/admin_instance.dart';
 import '../custom_widget/admin_custom.dart';
 import '../users/user_instance.dart';
@@ -201,11 +202,16 @@ class _AdminState extends State<Admin> {
                                   )
                                 ),
                                 const SizedBox(width: 35),
-                                DashboardCards(
-                                  icon: LineIcons.fileInvoiceWithUsDollar, 
-                                  textData: '${snapshot.data!.inventory_value} PHP', 
-                                  color: Colors.blue[200], 
-                                  cardTitle: 'Inventory Value')
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> const QrScanner()));
+                                  },
+                                  child: DashboardCards(
+                                    icon: LineIcons.fileInvoiceWithUsDollar, 
+                                    textData: '${snapshot.data!.inventory_value} PHP', 
+                                    color: Colors.blue[200], 
+                                    cardTitle: 'Inventory Value'),
+                                )
                               ],
                             ),
                           ],
