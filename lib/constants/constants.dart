@@ -5,3 +5,4 @@ const userUrl = '$baseUrl/user';
 //admin
 const dashboardUrl = '$baseUrl/dashboard-datas';
 const purchaseOrderUrl = '$baseUrl/purchase-order';
+const productStocks = '$baseUrl/show-stocks';

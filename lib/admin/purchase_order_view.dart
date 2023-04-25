@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:mobile_inventory_system/constants/constants.dart';
@@ -44,7 +45,12 @@ class _PurchaseOrderViewState extends State<PurchaseOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Data'),
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: Text('Sales', style: GoogleFonts.poppins(
+          color: Colors.black
+        )),
+        elevation: 0,
+        backgroundColor: Colors.white54,
       ),
       body: Center(
         child: FutureBuilder<List<PurchaseOrder>>(
