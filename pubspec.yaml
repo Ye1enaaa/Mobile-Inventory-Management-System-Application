@@ -39,6 +39,7 @@ dependencies:
   http: ^0.13.5
   line_icons: ^2.0.1
   google_fonts: ^4.0.3
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:
