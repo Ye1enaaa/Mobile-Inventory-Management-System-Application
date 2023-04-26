@@ -8,5 +8,4 @@ const purchaseOrderUrl = '$baseUrl/purchase-order';
 const productStocks = '$baseUrl/show-stocks';
 
 //toBeAnnnounced
-
 const getDataFromBarcodeUrl = '$baseUrl/product-id/';
