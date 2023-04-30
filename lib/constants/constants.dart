@@ -9,3 +9,6 @@ const productStocks = '$baseUrl/show-stocks';
 
 //toBeAnnnounced
 const getDataFromBarcodeUrl = '$baseUrl/product-id/';
+
+//Staff
+const postOrder = '$baseUrl/addproduct';
