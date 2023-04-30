@@ -25,6 +25,7 @@ class _QrScannerState extends State<QrScanner> {
       final productPrice = product['unit_price'] as String;
       final productQuantity = product['quantity'] as String;
       final productDesc = product['description'] as String;
+      final productTotalValue = product['inventory_value'] as String;
       showDialog(context: context, builder: (BuildContext context){
         return AlertDialog(
           content: Container(
@@ -39,7 +40,11 @@ class _QrScannerState extends State<QrScanner> {
                 Text('Quantity: $productQuantity', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
                 const SizedBox(height: 1),
                 ElevatedButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> FormValue(productName: productName)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> FormValue(
+                    productName: productName, 
+                    productQuantity: productQuantity,
+                    productPrice: productPrice,
+                  )));
                 }, child: const Text('Place Order'))
               ],
             ),
