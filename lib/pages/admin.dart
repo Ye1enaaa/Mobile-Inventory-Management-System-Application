@@ -176,8 +176,13 @@ class _AdminState extends State<Admin> {
                   );
                 } else if(snapshot.connectionState == ConnectionState.done){
                   if (snapshot.hasError) {
-                    return const Text('Error');
+                    return Text('$snapshot.error');
                   } else if (snapshot.hasData) {
+                    final String productsQuantity = snapshot.data!.products_quantity.toString();
+                    final String inventoryVal = snapshot.data!.inventory_value.toString();
+                    final String adminCount = snapshot.data!.admin_count.toString();
+                    final String ordersValue = snapshot.data!.orders_value.toString();
+                    final String productCount = snapshot.data!.product_count.toString();
                     return Column(
                       children: [
                         Column(
@@ -197,7 +202,7 @@ class _AdminState extends State<Admin> {
                                   child: DashboardCards(
                                     color: Colors.orange[400], 
                                     icon: LineIcons.wineGlass, 
-                                    textData: '${snapshot.data!.products_quantity} pcs',
+                                    textData: productsQuantity,
                                     cardTitle: 'Liquor Quantity',
                                   )
                                 ),
@@ -208,7 +213,7 @@ class _AdminState extends State<Admin> {
                                   },
                                   child: DashboardCards(
                                     icon: LineIcons.fileInvoiceWithUsDollar, 
-                                    textData: '${snapshot.data!.inventory_value} PHP', 
+                                    textData: inventoryVal, 
                                     color: Colors.blue[200], 
                                     cardTitle: 'Inventory Value'),
                                 )
@@ -224,7 +229,7 @@ class _AdminState extends State<Admin> {
                                 const SizedBox(width: 30),
                                 DashboardCards(
                                   icon: LineIcons.userFriends, 
-                                  textData: '${snapshot.data!.admin_count}', 
+                                  textData: adminCount, 
                                   color: Colors.orange[200], 
                                   cardTitle: 'Customer'
                                 ),
@@ -235,7 +240,7 @@ class _AdminState extends State<Admin> {
                                   },
                                   child: DashboardCards(
                                     icon: LineIcons.barChartAlt, 
-                                    textData: '${snapshot.data!.orders_value} PHP', 
+                                    textData: ordersValue, 
                                     color: Colors.blue[200], 
                                     cardTitle: 'Sales')
                                 ),
@@ -251,7 +256,7 @@ class _AdminState extends State<Admin> {
                                 const SizedBox(width: 30),
                                 DashboardCards(
                                   icon: LineIcons.shoppingBag, 
-                                  textData: '${snapshot.data!.product_count} pcs', 
+                                  textData: productCount, 
                                   color: Colors.orange[200], 
                                   cardTitle: 'Products')
                                 //const SizedBox(width: 35)
