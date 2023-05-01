@@ -19,7 +19,7 @@ class Dashboard{
     return Dashboard(
       products_quantity: json['products_quantity'], 
       inventory_value: json['inventory_value'], 
-      orders_value: json['orders_value'], 
+      orders_value: json['orders_value'].toString(), 
       admin_count: json['admin_count'],
       product_count: json['product_count']
     );
