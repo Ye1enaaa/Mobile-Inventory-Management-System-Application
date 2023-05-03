@@ -1,14 +1,14 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_inventory_system/API%20Response/api_response.dart';
 import 'package:mobile_inventory_system/constants/constants.dart';
 import 'package:mobile_inventory_system/pages/customer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../pages/admin.dart';
 import '../pages/root_page.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 class Login extends StatefulWidget {
   const Login({ Key? key }) : super(key: key);
 
@@ -84,63 +84,129 @@ class _LoginState extends State<Login> {
           child: Container(
             decoration: const BoxDecoration(
             ),
-            child: Column(
-              children: [
-                const Text('Welcome!!'),
-                const SizedBox(height: 220),
-                Form(
-                  child: Row(
+            child: Form(
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 40),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      //const SizedBox(width: 16),
                       Container(
-                        height: 400,
-                        width: 432,
+                      width: 250,
+                      height: 250,
+                      child: Image.asset(
+                        'assets/login.png',
+                        fit: BoxFit.cover,
+                      ),
+                  ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    children: [
+                      const SizedBox(width: 10),
+                      Text('Login', style: GoogleFonts.poppins(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold
+                      )),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    children: [
+                      const SizedBox(width: 35),
+                      Container(
+                        width: 360,
                         decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(40)
-                        ),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 40),
-                            SizedBox(
-                              width: 350,
-                              child: TextFormField(
-                                controller: emailController,
-                                decoration: InputDecoration(
-                                  hintText: "Email",
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(40)
-                                  ),
-                                  filled: true
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 60),
-                            SizedBox(
-                              width: 350,
-                              child: TextFormField(
-                                controller: passwordController,
-                                decoration: InputDecoration(
-                                  hintText: "Password",
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(40)
-                                  ),
-                                  filled: true
-                                ),
-                              ),
-                            ),
-                            ElevatedButton(onPressed: (){
-                              loginNow();
-                            }, child: const Text("SUBMIT"))
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.white60,
+                              spreadRadius: 2,
+                              blurRadius: 15
+                            )
                           ],
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 0.5,
+                            
+                          ),
+                          borderRadius: BorderRadius.circular(20)
+                        ),
+                        child: TextField(
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            hintText: "Email ID",
+                            hintStyle: GoogleFonts.poppins(),
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.all(10)
+                          ),
                         ),
                       ),
                     ],
                   ),
-                )
-              ],
+                  const SizedBox(height: 30),
+                  Row(
+                    children: [
+                      const SizedBox(width: 35),
+                      Container(
+                        width: 360,
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.white60,
+                              spreadRadius: 2,
+                              blurRadius: 15
+                            )
+                          ],
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 0.5,
+                            
+                          ),
+                          borderRadius: BorderRadius.circular(20)
+                        ),
+                        child: TextFormField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                            hintStyle: GoogleFonts.poppins(),
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.all(10)
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    children: [
+                      const SizedBox(width: 30),
+                      GestureDetector(
+                        onTap: loginNow,
+                        child: Container(
+                          width: 360,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1),
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Login', style: GoogleFonts.poppins(
+                                fontSize: 22
+                              ),)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           )
         ),
