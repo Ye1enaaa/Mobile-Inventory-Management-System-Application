@@ -29,7 +29,7 @@ class _QrScannerState extends State<QrScanner> {
       showDialog(context: context, builder: (BuildContext context){
         return AlertDialog(
           content: Container(
-            height: 230,
+            height: 500,
             child: Column(
               children: [
                 const SizedBox(height: 20),
