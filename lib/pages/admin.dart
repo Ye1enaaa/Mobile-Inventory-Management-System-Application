@@ -202,9 +202,9 @@ class _AdminState extends State<Admin> {
                                   },
                                   child: DashboardCards(
                                     color: Colors.orange[400], 
-                                    icon: LineIcons.wineGlass, 
+                                    icon: LineIcons.motorcycle, 
                                     textData: productsQuantity,
-                                    cardTitle: 'Liquor Quantity',
+                                    cardTitle: 'Quantity',
                                   )
                                 ),
                                 const SizedBox(width: 35),
@@ -236,7 +236,7 @@ class _AdminState extends State<Admin> {
                                     icon: LineIcons.userFriends, 
                                     textData: adminCount, 
                                     color: Colors.orange[200], 
-                                    cardTitle: 'Customer'
+                                    cardTitle: 'Suppliers'
                                   ),
                                 ),
                                 const SizedBox(width: 35),
@@ -264,7 +264,7 @@ class _AdminState extends State<Admin> {
                                   icon: LineIcons.shoppingBag, 
                                   textData: productCount, 
                                   color: Colors.orange[200], 
-                                  cardTitle: 'Products')
+                                  cardTitle: 'Stock')
                                 //const SizedBox(width: 35)
                               ],
                             )

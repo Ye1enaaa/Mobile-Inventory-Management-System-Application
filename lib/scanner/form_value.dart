@@ -64,58 +64,85 @@ class _FormValueState extends State<FormValue> {
     priceControl.text = priceProduct;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Form'),
-        actions: [
-          IconButton(onPressed: (){
-            Navigator.pop(context);
-          }, icon: const Icon(Icons.arrow_back))
-        ],
+        //automaticallyImplyLeading: false,
+        title: const Text('Stock Out Form'),
       ), 
       body: Form(
         key: formKey,
         child: Column(
           children: [
+            const SizedBox(height: 10),
             TextFormField(
               controller: nameControl,
-            ),
-            TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (val){
-                if(val!.isEmpty){
-                  return 'Field required';
-                }
-                final intValue = int.tryParse(val);
-                if(intValue! > parsedQuantity){
-                  return 'Not enough quantity';
-                }
-                return null;
-              },
               decoration: InputDecoration(
-                hintText: quantityProduct
-              ),
-              controller: quantityControl,
+              labelText: 'Product Name',
+              border: OutlineInputBorder(),
             ),
-            TextFormField(
-              controller: priceControl,
-              enabled: false,
+          ),
+          SizedBox(height: 12.0),
+          TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (val){
+              if(val!.isEmpty){
+                return 'Field required';
+              }
+              final intValue = int.tryParse(val);
+              if(intValue! > parsedQuantity){
+                return 'Not enough quantity';
+              }
+              return null;
+            },
+            controller: quantityControl,
+            decoration: InputDecoration(
+              labelText: 'Quantity',
+              border: OutlineInputBorder(),
+              hintText: quantityProduct,
             ),
-            ElevatedButton(onPressed: (){
-                int totalValue = parsedQuantity * parsedPrice;
-                print(parsedQuantity);
-                print(parsedPrice);
-                print(totalValue);
-                totalControl.text = totalValue.toString();
-                setState(() {
-                  
-                });
-            }, child: const Text('Equals')),
-            TextFormField(
-              controller: totalControl,
+          ),
+          SizedBox(height: 12.0),
+          TextFormField(
+            controller: priceControl,
+            enabled: false,
+            decoration: InputDecoration(
+              labelText: 'Price',
+              border: OutlineInputBorder(),
             ),
-            ElevatedButton(onPressed: (){
+          ),
+          SizedBox(height: 12.0),
+          ElevatedButton(
+            onPressed: (){
+              int totalValue = parsedQuantity * parsedPrice;
+              print(parsedQuantity);
+              print(parsedPrice);
+              print(totalValue);
+              totalControl.text = totalValue.toString();
+              setState(() {});
+            },
+            child: const Text('Calculate Total'),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.blue,
+              onPrimary: Colors.white,
+            ),
+          ),
+          SizedBox(height: 12.0),
+          TextFormField(
+            controller: totalControl,
+            decoration: InputDecoration(
+              labelText: 'Total',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          SizedBox(height: 12.0),
+          ElevatedButton(
+            onPressed: (){
               postDataFromStaff();
-            }, child: const Text('SUBMIT'))
+            },
+            child: const Text('Submit'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+            ),
+          ),
           ],
         )
       ),

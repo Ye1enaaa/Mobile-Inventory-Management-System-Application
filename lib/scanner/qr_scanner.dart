@@ -45,7 +45,7 @@ class _QrScannerState extends State<QrScanner> {
                     productQuantity: productQuantity,
                     productPrice: productPrice,
                   )));
-                }, child: const Text('Place Order'))
+                }, child: const Text('Stock Out'))
               ],
             ),
           ),
