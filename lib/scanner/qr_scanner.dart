@@ -16,16 +16,13 @@ class QrScanner extends StatefulWidget {
 class _QrScannerState extends State<QrScanner> {
 
   Future<void> getDataFromBarcode(data)async{
-    final response = await http.get(Uri.parse('$getDataFromBarcodeUrl$data'));
-    final decode = jsonDecode(response.body) as Map;
-    final decoded = decode['product'] as List;
+    final response = await http.get(Uri.parse('$fetchQrCodeData$data'));
+    final decoded = jsonDecode(response.body); 
     if(decoded.isNotEmpty){
-      final product = decoded.first as Map;
+      final product = decoded['stock'];
       final productName = product['name'] as String;
-      final productPrice = product['unit_price'] as String;
-      final productQuantity = product['quantity'] as String;
-      final productDesc = product['description'] as String;
-      final productTotalValue = product['inventory_value'] as String;
+      final productID = product['id'].toString();
+      final supplierName = product['supplier']['name'] as String;
       showDialog(context: context, builder: (BuildContext context){
         return AlertDialog(
           content: Container(
@@ -33,19 +30,19 @@ class _QrScannerState extends State<QrScanner> {
             child: Column(
               children: [
                 const SizedBox(height: 20),
+                Text('ID: $productID', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
+                const SizedBox(height: 20),
                 Text('Product: $productName', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
                 const SizedBox(height: 20),
-                Text('Price: $productPrice', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
-                const SizedBox(height: 20),
-                Text('Quantity: $productQuantity', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
+                Text('Supplier Name: $supplierName', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
                 const SizedBox(height: 1),
                 ElevatedButton(onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> FormValue(
                     productName: productName, 
-                    productQuantity: productQuantity,
-                    productPrice: productPrice,
+                    productID: productID,
+                    supplierName: supplierName,
                   )));
-                }, child: const Text('Stock Out'))
+                }, child: const Text('Stock In'))
               ],
             ),
           ),

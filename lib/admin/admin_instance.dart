@@ -17,7 +17,7 @@ class Dashboard{
 
   factory Dashboard.fromJson(Map<String, dynamic> json){
     return Dashboard(
-      products_quantity: json['products_quantity'], 
+      products_quantity: int.parse(json['products_quantity']), 
       inventory_value: json['inventory_value'], 
       orders_value: json['orders_value'].toString(), 
       admin_count: json['admin_count'],
