@@ -2,30 +2,28 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mobile_inventory_system/API%20Response/api_response.dart';
 import 'package:mobile_inventory_system/constants/constants.dart';
-class FormValue extends StatefulWidget {
+class StockOutForm extends StatefulWidget {
 final String productName;
 final String productID;
-final String supplierName;
 
-const FormValue({ 
+
+const StockOutForm({ 
   Key? key,
-  required this.supplierName,
   required this.productID,
   required this.productName 
 }) : super(key: key);
 
   @override
-  State<FormValue> createState() => _FormValueState();
+  State<StockOutForm> createState() => _StockOutFormState();
 }
 
-class _FormValueState extends State<FormValue> {
+class _StockOutFormState extends State<StockOutForm> {
 
-  Future<void> stockIn()async{
+  Future<void> stockOut()async{
     final id = prodIDcontrol.text;
     final name = nameControl.text;
-    final supplierName = supplierNamecontrol.text;
+    final supplierName = customerNamecontrol.text;
 
     final body = {
       'stockName': name,
@@ -34,7 +32,7 @@ class _FormValueState extends State<FormValue> {
       'product_id' : int.parse(id),
     };
     final response = await http.post(
-      Uri.parse(stockInRoute),
+      Uri.parse(stockOutRoute),
       body: jsonEncode(body),
       headers: {
         'Content-type' : 'application/json'
@@ -42,9 +40,8 @@ class _FormValueState extends State<FormValue> {
     );
     //final data = jsonEncode(body);
     if(response.statusCode == 200){
-      print('Success');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Stock In Successful'))
+        const SnackBar(content: Text('Stock Out Successful'))
       );
     }
     print(response.body);
@@ -52,18 +49,16 @@ class _FormValueState extends State<FormValue> {
   var formKey = GlobalKey<FormState>();
   TextEditingController nameControl = TextEditingController();
   TextEditingController prodIDcontrol = TextEditingController();
-  TextEditingController supplierNamecontrol = TextEditingController();
+  TextEditingController customerNamecontrol = TextEditingController();
   TextEditingController stockQuantitycontrol = TextEditingController();
   @override
   Widget build(BuildContext context){
     String nameProduct = widget.productName;
-    String productID = widget.productID;
-    String supplierName = widget.supplierName;
+    String productID = widget.productID;  
     //int parsedQuantity = int.tryParse(quantityControl.text) ?? 0;
     //int parsedPrice = int.tryParse(priceProduct) ?? 0;
     nameControl.text = nameProduct;
     prodIDcontrol.text = productID;
-    supplierNamecontrol.text = supplierName;
     return Scaffold(
       appBar: AppBar(
         //automaticallyImplyLeading: false,
@@ -94,10 +89,9 @@ class _FormValueState extends State<FormValue> {
           ),
           const SizedBox(height: 12.0),
           TextFormField(
-            controller: supplierNamecontrol,
-            enabled: false,
+            controller: customerNamecontrol,
             decoration: const InputDecoration(
-              labelText: 'Supplier Name',
+              labelText: 'Customer Name',
               border: OutlineInputBorder(),
             ),
           ),
@@ -136,7 +130,7 @@ class _FormValueState extends State<FormValue> {
           const SizedBox(height: 12.0),
           ElevatedButton(
             onPressed: (){
-              stockIn();
+              stockOut();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,

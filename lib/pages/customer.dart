@@ -9,6 +9,7 @@ import 'package:mobile_inventory_system/constants/constants.dart';
 import 'package:mobile_inventory_system/scanner/qr_scanner.dart';
 import 'package:mobile_inventory_system/scanner/stock_in.dart';
 
+import '../Stock Out/stock_out_scan.dart';
 import '../login/login.dart';
 class Customer extends StatefulWidget {
   const Customer({ Key? key }) : super(key: key);
@@ -131,7 +132,7 @@ class _CustomerState extends State<Customer> {
               const SizedBox(width: 70),
               InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const StockIn()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const QrScanner()));
                 },
                 child: Ink(
                   height: 200,
@@ -156,7 +157,7 @@ class _CustomerState extends State<Customer> {
               const SizedBox(width: 70),
               InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const QrScanner()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const StockOutScan()));
                 },
                 child: Ink(
                   height: 200,

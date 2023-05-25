@@ -12,5 +12,6 @@ const getDataFromBarcodeUrl = '$baseUrl/product-id/';
 const fetchQrCodeData = '$baseUrl/qrcode/';
 
 const stockInRoute = '$baseUrl/stockin';
+const stockOutRoute = '$baseUrl/stockout';
 //Staff
 const postOrder = '$baseUrl/addproduct';
