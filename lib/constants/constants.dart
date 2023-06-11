@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.45.159:8000/api';
+const baseUrl = 'http://192.168.94.208:8000/api';
 const loginUrl = '$baseUrl/login-mobile';
 const logoutUrl = '$baseUrl/logoutMobile';
 const userUrl = '$baseUrl/user';

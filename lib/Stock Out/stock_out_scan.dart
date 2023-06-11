@@ -45,8 +45,9 @@ class _StockOutScanState extends State<StockOutScan> {
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> StockOutForm(
                     productName: productName, 
                     productID: productID,
+                    productQuantity: productQuantity,
                   )));
-                }, child: const Text('Stock In'))
+                }, child: const Text('Stock Out'))
               ],
             ),
           ),
