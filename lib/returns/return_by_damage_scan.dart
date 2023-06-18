@@ -4,16 +4,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:mobile_inventory_system/constants/constants.dart';
+import 'package:mobile_inventory_system/returns/return_damage_form.dart';
 import 'package:mobile_inventory_system/scanner/form_value.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-class QrScanner extends StatefulWidget {
-  const QrScanner({ Key? key }) : super(key: key);
+class ReturnByDamageScan extends StatefulWidget {
+  const ReturnByDamageScan({ Key? key }) : super(key: key);
 
   @override
-  _QrScannerState createState() => _QrScannerState();
+  _ReturnByDamageScanState createState() => _ReturnByDamageScanState();
 }
 
-class _QrScannerState extends State<QrScanner> {
+class _ReturnByDamageScanState extends State<ReturnByDamageScan> {
 
   Future<void> getDataFromBarcode(data)async{
     final response = await http.get(Uri.parse('$fetchQrCodeData$data'));
@@ -37,12 +38,12 @@ class _QrScannerState extends State<QrScanner> {
                 Text('Supplier Name: $supplierName', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
                 const SizedBox(height: 1),
                 ElevatedButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> FormValue(
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ReturnDamageForm(
                     productName: productName, 
                     productID: productID,
                     supplierName: supplierName,
                   )));
-                }, child: const Text('Stock In'))
+                }, child: const Text('Return Stock'))
               ],
             ),
           ),

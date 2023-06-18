@@ -27,7 +27,7 @@ class _StockOutScanState extends State<StockOutScan> {
       showDialog(context: context, builder: (BuildContext context){
         return AlertDialog(
           content: Container(
-            height: 500,
+            height: 350,
             child: Column(
               children: [
                 const SizedBox(height: 20),

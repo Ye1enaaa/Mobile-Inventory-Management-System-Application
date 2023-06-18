@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_inventory_system/API%20Response/api_response.dart';
 import 'package:mobile_inventory_system/constants/constants.dart';
-import 'package:mobile_inventory_system/pages/customer.dart';
+import 'package:mobile_inventory_system/pages/staff_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/admin.dart';
 import '../pages/root_page.dart';

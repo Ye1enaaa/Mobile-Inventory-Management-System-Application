@@ -1,15 +1,14 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_inventory_system/API%20Response/api_response.dart';
 import 'package:mobile_inventory_system/constants/constants.dart';
-class FormValue extends StatefulWidget {
+class ReturnDamageForm extends StatefulWidget {
 final String productName;
 final String productID;
 final String supplierName;
 
-const FormValue({ 
+const ReturnDamageForm({ 
   Key? key,
   required this.supplierName,
   required this.productID,
@@ -17,24 +16,26 @@ const FormValue({
 }) : super(key: key);
 
   @override
-  State<FormValue> createState() => _FormValueState();
+  State<ReturnDamageForm> createState() => _ReturnDamageFormState();
 }
 
-class _FormValueState extends State<FormValue> {
+class _ReturnDamageFormState extends State<ReturnDamageForm> {
 
-  Future<void> stockIn()async{
+  Future<void> returnByDamage()async{
     final id = prodIDcontrol.text;
     final name = nameControl.text;
-    final supplierName = supplierNamecontrol.text;
+    final customerName = customerNamecontrol.text;
+    const comments = 'RETURN DUE TO DAMAGE';
 
     final body = {
       'stockName': name,
-      'supplierName' : supplierName,
-      'stockQuantity': int.parse(stockQuantitycontrol.text),
+      'customerName' : customerName,
+      'stockQuantityReturn': int.parse(stockQuantitycontrol.text),
       'product_id' : int.parse(id),
+      'comments': comments
     };
     final response = await http.post(
-      Uri.parse(stockInRoute),
+      Uri.parse(returnDamageStockRoute),
       body: jsonEncode(body),
       headers: {
         'Content-type' : 'application/json'
@@ -44,7 +45,7 @@ class _FormValueState extends State<FormValue> {
     if(response.statusCode == 200){
       print('Success');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Stock In Successful'))
+        const SnackBar(content: Text('Return Log Successful'))
       );
     }
     print(response.body);
@@ -54,6 +55,7 @@ class _FormValueState extends State<FormValue> {
   TextEditingController prodIDcontrol = TextEditingController();
   TextEditingController supplierNamecontrol = TextEditingController();
   TextEditingController stockQuantitycontrol = TextEditingController();
+  TextEditingController customerNamecontrol = TextEditingController();
   @override
   Widget build(BuildContext context){
     String nameProduct = widget.productName;
@@ -67,7 +69,7 @@ class _FormValueState extends State<FormValue> {
     return Scaffold(
       appBar: AppBar(
         //automaticallyImplyLeading: false,
-        title: const Text('Stock IN Form'),
+        title: const Text('Return due to damage form'),
       ), 
       body: Form(
         key: formKey,
@@ -94,10 +96,9 @@ class _FormValueState extends State<FormValue> {
           ),
           const SizedBox(height: 12.0),
           TextFormField(
-            controller: supplierNamecontrol,
-            enabled: false,
+            controller: customerNamecontrol,
             decoration: const InputDecoration(
-              labelText: 'Supplier Name',
+              labelText: 'Customer Name',
               border: OutlineInputBorder(),
             ),
           ),
@@ -137,7 +138,7 @@ class _FormValueState extends State<FormValue> {
           const SizedBox(height: 12.0),
           ElevatedButton(
             onPressed: (){
-              stockIn();
+              returnByDamage();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,

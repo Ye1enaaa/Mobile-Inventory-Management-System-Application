@@ -13,5 +13,7 @@ const fetchQrCodeData = '$baseUrl/qrcode/';
 
 const stockInRoute = '$baseUrl/stockin';
 const stockOutRoute = '$baseUrl/stockout';
+const returnDamageStockRoute = '$baseUrl/returnindamage';
+const returnInExchangeStockRoute = '$baseUrl/returninexchange';
 //Staff
 const postOrder = '$baseUrl/addproduct';
