@@ -27,28 +27,39 @@ class _StockOutScanState extends State<StockOutScan> {
       showDialog(context: context, builder: (BuildContext context){
         return AlertDialog(
           content: Container(
-            height: 350,
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                Text('ID: $productID', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
-                const SizedBox(height: 20),
-                Text('Product: $productName', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
-                const SizedBox(height: 20),
-                Text('Supplier Name: $supplierName', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
-                const SizedBox(height: 20),
-                Text('Price: $productPrice', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
-                const SizedBox(height: 20),
-                Text('Stock on Hand: $productQuantity', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
-                const SizedBox(height: 1),
-                ElevatedButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> StockOutForm(
-                    productName: productName, 
-                    productID: productID,
-                    productQuantity: productQuantity,
-                  )));
-                }, child: const Text('Stock Out'))
-              ],
+            width: double.maxFinite,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 20),
+                  Text('ID: $productID', style: GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
+                  const SizedBox(height: 20),
+                  Text('Product: $productName', style: GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
+                  const SizedBox(height: 20),
+                  Text('Supplier Name: $supplierName', style: GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
+                  const SizedBox(height: 20),
+                  Text('Price: $productPrice', style: GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
+                  const SizedBox(height: 20),
+                  Text('Stock on Hand: $productQuantity', style: GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => StockOutForm(
+                          productName: productName,
+                          productID: productID,
+                          productQuantity: productQuantity,
+                        )),
+                      );
+                    },
+                    child: const Text('Stock Out'),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -63,51 +74,51 @@ class _StockOutScanState extends State<StockOutScan> {
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
         backgroundColor: Colors.white54,
-        title: Text('SCANNER', style: GoogleFonts.poppins(
-          color: Colors.black
-        )),
+        title: Text(
+          'SCANNER',
+          style: GoogleFonts.poppins(
+            color: Colors.black,
+          ),
+        ),
       ),
-      body: Column(
-        children: [
-        const SizedBox(height: 220),
-        Container(
-          height: 300,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-              width: 5
-            )
-          ),
-          child: MobileScanner(     
-            controller: MobileScannerController(
-              detectionSpeed: DetectionSpeed.normal,
-              facing: CameraFacing.back,
-              torchEnabled: false
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 5,
+                  ),
+                ),
+                child: MobileScanner(
+                  controller: MobileScannerController(
+                    detectionSpeed: DetectionSpeed.normal,
+                    facing: CameraFacing.back,
+                    torchEnabled: false,
+                  ),
+                  onDetect: (capture) {
+                    String? finalData;
+                    final List<Barcode> barcodes = capture.barcodes;
+                    for (final barcode in barcodes) {
+                      setState(() {
+                        String data = barcode.rawValue!;
+                        finalData = data;
+                      });
+                    }
+                    if (!_screenOpened) {
+                      getDataFromBarcode(finalData);
+                      _screenOpened = true;
+                    }
+                  },
+                ),
+              ),
             ),
-            onDetect: (capture){
-              String? finalData;
-              /*Barcode barcode;
-              setState(() {
-                final String data = barcode.rawValue ?? '';
-                finalData = data;
-              });*/
-              final List<Barcode> barcodes = capture.barcodes;
-              //final Uint8List? image = capture.image;
-              for(final barcode in barcodes){
-                setState(() {
-                  String data = barcode.rawValue!;
-                  finalData = data;
-                  //debugPrint(data);
-                });
-              }
-              if(!_screenOpened){
-                getDataFromBarcode(finalData);
-                _screenOpened = true;
-              }
-            }
-          ),
-        )
-        ]
+          ],
+        ),
       ),
     );
   }

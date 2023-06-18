@@ -25,28 +25,52 @@ class _QrScannerState extends State<QrScanner> {
       final supplierName = product['supplier']['name'] as String;
       showDialog(context: context, builder: (BuildContext context){
         return AlertDialog(
-          content: Container(
+        content: SingleChildScrollView(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 400),
             height: 250,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                Text('ID: $productID', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
+                Text(
+                  'ID: $productID',
+                  style: GoogleFonts.poppins(color: Colors.red, fontSize: 24),
+                ),
                 const SizedBox(height: 20),
-                Text('Product: $productName', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
+                Text(
+                  'Product: $productName',
+                  style: GoogleFonts.poppins(color: Colors.red, fontSize: 24),
+                ),
                 const SizedBox(height: 20),
-                Text('Supplier Name: $supplierName', style:GoogleFonts.poppins(color: Colors.red, fontSize: 24)),
-                const SizedBox(height: 1),
-                ElevatedButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> FormValue(
-                    productName: productName, 
-                    productID: productID,
-                    supplierName: supplierName,
-                  )));
-                }, child: const Text('Stock In'))
+                Text(
+                  'Supplier Name: $supplierName',
+                  style: GoogleFonts.poppins(color: Colors.red, fontSize: 24),
+                ),
+                const SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FormValue(
+                            productName: productName,
+                            productID: productID,
+                            supplierName: supplierName,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text('Stock In'),
+                  ),
+                ),
               ],
             ),
           ),
-        );
+        ),
+      );
       });
     }
   }
@@ -62,56 +86,53 @@ class _QrScannerState extends State<QrScanner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        elevation: 0,
-        backgroundColor: Colors.white54,
-        title: Text('SCANNER', style: GoogleFonts.poppins(
-          color: Colors.black
-        )),
+    appBar: AppBar(
+      iconTheme: const IconThemeData(color: Colors.black),
+      elevation: 0,
+      backgroundColor: Colors.white54,
+      title: Text(
+        'SCANNER',
+        style: GoogleFonts.poppins(
+          color: Colors.black,
+        ),
       ),
-      body: Column(
+    ),
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-        const SizedBox(height: 220),
-        Container(
-          height: 300,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-              width: 5
-            )
-          ),
-          child: MobileScanner(     
-            controller: MobileScannerController(
-              detectionSpeed: DetectionSpeed.normal,
-              facing: CameraFacing.back,
-              torchEnabled: false
+          const SizedBox(height: 40),
+          Container(
+            constraints: const BoxConstraints(maxWidth: 400),
+            height: MediaQuery.of(context).size.width * 0.7,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 5),
             ),
-            onDetect: (capture){
-              String? finalData;
-              /*Barcode barcode;
-              setState(() {
-                final String data = barcode.rawValue ?? '';
-                finalData = data;
-              });*/
-              final List<Barcode> barcodes = capture.barcodes;
-              //final Uint8List? image = capture.image;
-              for(final barcode in barcodes){
-                setState(() {
-                  String data = barcode.rawValue!;
-                  finalData = data;
-                  //debugPrint(data);
-                });
-              }
-              if(!_screenOpened){
-                getDataFromBarcode(finalData);
-                _screenOpened = true;
-              }
-            }
+            child: MobileScanner(
+              controller: MobileScannerController(
+                detectionSpeed: DetectionSpeed.normal,
+                facing: CameraFacing.back,
+                torchEnabled: false,
+              ),
+              onDetect: (capture) {
+                String? finalData;
+                final List<Barcode> barcodes = capture.barcodes;
+                for (final barcode in barcodes) {
+                  setState(() {
+                    String data = barcode.rawValue!;
+                    finalData = data;
+                  });
+                }
+                if (!_screenOpened) {
+                  getDataFromBarcode(finalData);
+                  _screenOpened = true;
+                }
+              },
+            ),
           ),
-        )
-        ]
+        ],
       ),
-    );
+    ),
+  );
   }
 }
