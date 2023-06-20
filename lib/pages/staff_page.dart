@@ -12,6 +12,7 @@ import 'package:mobile_inventory_system/scanner/stock_in.dart';
 
 import '../Stock Out/stock_out_scan.dart';
 import '../login/login.dart';
+import '../returnByexchange/return_exchange_scan.dart';
 class Customer extends StatefulWidget {
   const Customer({ Key? key }) : super(key: key);
 
@@ -116,97 +117,125 @@ class _CustomerState extends State<Customer> {
       elevation: 0,
       backgroundColor: Colors.white38,
     ),
-    body: SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(height: 30),
-          Text(
-            'Stock Management',
-            style: GoogleFonts.poppins(
-              color:Colors.black,
-              fontSize: 30,
+    body: SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 30),
+            Text(
+              'Stock Management',
+              style: GoogleFonts.poppins(
+                color:Colors.black,
+                fontSize: 30,
+              ),
             ),
-          ),
-          const SizedBox(height: 50),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 70),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const QrScanner()));
-              },
-              child: Ink(
-                height: 200,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.green[200],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Text(
-                    'Stock In',
-                    style: GoogleFonts.poppins(
-                      fontSize: 30,
-                      color: Colors.black,
+            const SizedBox(height: 50),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 70),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const QrScanner()));
+                },
+                child: Ink(
+                  height: 200,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.green[200],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Stock In',
+                      style: GoogleFonts.poppins(
+                        fontSize: 30,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 60),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 70),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const StockOutScan()));
-              },
-              child: Ink(
-                height: 200,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.red[300],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Text(
-                    'Stock Out',
-                    style: GoogleFonts.poppins(
-                      fontSize: 30,
-                      color: Colors.black,
+            const SizedBox(height: 60),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 70),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const StockOutScan()));
+                },
+                child: Ink(
+                  height: 200,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.red[300],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Stock Out',
+                      style: GoogleFonts.poppins(
+                        fontSize: 30,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 60),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 70),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const ReturnByDamageScan()));
-              },
-              child: Ink(
-                height: 200,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.red[300],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Text(
-                    'Return due to damage',
-                    style: GoogleFonts.poppins(
-                      fontSize: 30,
-                      color: Colors.black,
+            const SizedBox(height: 60),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 70),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ReturnByDamageScan()));
+                },
+                child: Ink(
+                  height: 200,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.red[300],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Return due to damage',
+                      style: GoogleFonts.poppins(
+                        fontSize: 30,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 60),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 70),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ReturnExchangeScan()));
+                },
+                child: Ink(
+                  height: 200,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.green[300],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Return for exchange',
+                      style: GoogleFonts.poppins(
+                        fontSize: 30,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     ),
   );

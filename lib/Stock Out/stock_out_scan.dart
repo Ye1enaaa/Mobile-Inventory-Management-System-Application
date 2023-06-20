@@ -85,9 +85,9 @@ class _StockOutScanState extends State<StockOutScan> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
+            SizedBox(
               child: Container(
-                margin: EdgeInsets.all(20),
+                height: MediaQuery.of(context).size.width * 0.7,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Colors.black,
