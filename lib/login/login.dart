@@ -57,9 +57,8 @@ class _LoginState extends State<Login> {
         if(role == 3){
           Navigator.push(context, MaterialPageRoute(builder: (context)=> const Customer()));
         } else if(role == 2){
-        // ignore: use_build_context_synchronously
         Navigator.push(context, MaterialPageRoute(builder: (context)=> const Admin()));
-      } // ignore: use_build_context_synchronously
+      } 
       } else if(status == 1){
         print('Account Disabled');
       }
