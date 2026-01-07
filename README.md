@@ -1,4 +1,4 @@
-# mobile_inventory_system
+# mobile_inventory_systems
 
 A new Flutter project.
 
